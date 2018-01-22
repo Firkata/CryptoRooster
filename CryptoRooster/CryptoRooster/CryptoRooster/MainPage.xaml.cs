@@ -1,33 +1,34 @@
-﻿using System;
+﻿using ModernHttpClient;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Http;
 using Xamarin.Forms;
 
 namespace CryptoRooster
 {
     public partial class MainPage : ContentPage
     {
+        string url = "https://api.coinmarketcap.com/v1/ticker/";
+        HttpClient client = new HttpClient(new NativeMessageHandler());
+        List<Coin> coins =  new List<Coin>();
+
         public MainPage()
         {
             InitializeComponent();
-            
-            coinslist.ItemsSource = GetCoins();
         }
-        private IEnumerable<Coin> GetCoins(string searchText = null)
-        {
-            //TODO: Call to a remote service CMC
-            var coins =  new List<Coin>
-            {
-                new Coin {Name = "Bitcoin", PriceUsd="11000", ImageUrl="http://lorempixel.com/100/100/people/1"},
-                new Coin {Name = "Ethereum", PriceUsd="1000", ImageUrl="http://lorempixel.com/100/100/people/2"}
-            };
 
-            if (string.IsNullOrWhiteSpace(searchText))
-                return coins;
-            return coins.Where(c => c.Name.ToLower().Contains(searchText.ToLowerInvariant()));
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            GetCoins();
+        }
+        private async void GetCoins()
+        {
+            var jsonContent = await client.GetStringAsync(url);
+            coins = JsonConvert.DeserializeObject<List<Coin>>(jsonContent);
+            coinslist.ItemsSource = coins;
         }
 
         private void coinslist_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -37,20 +38,26 @@ namespace CryptoRooster
 
         async private void coinslist_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            //TODO: Navigation to next page
             var coin = e.Item as Coin;
             await Navigation.PushAsync(new CoinDetailPage(coin));
         }
 
         private void coinslist_Refreshing(object sender, EventArgs e)
         {
-            coinslist.ItemsSource = GetCoins();
+            GetCoins();
             coinslist.EndRefresh();
         }
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            coinslist.ItemsSource = GetCoins(e.NewTextValue);
+            if (!string.IsNullOrWhiteSpace(e.NewTextValue))
+            {
+                coinslist.ItemsSource = coins.Where(c => c.Name.ToLower().Contains(e.NewTextValue.ToLowerInvariant()));
+            }
+            else
+            {
+                coinslist.ItemsSource = coins;
+            }
         }
     }
 }
