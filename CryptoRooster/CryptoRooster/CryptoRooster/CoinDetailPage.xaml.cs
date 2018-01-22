@@ -12,8 +12,12 @@ namespace CryptoRooster
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CoinDetailPage : ContentPage
     {
-        public CoinDetailPage()
+        public CoinDetailPage(Coin coin)
         {
+            if (coin == null)
+                throw new ArgumentException();
+
+            BindingContext = coin;
             InitializeComponent();
         }
 

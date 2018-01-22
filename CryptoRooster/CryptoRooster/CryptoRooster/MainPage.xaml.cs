@@ -38,8 +38,8 @@ namespace CryptoRooster
         async private void coinslist_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             //TODO: Navigation to next page
-            //var coin = e.Item as Coin;
-            await Navigation.PushAsync(new CoinDetailPage());
+            var coin = e.Item as Coin;
+            await Navigation.PushAsync(new CoinDetailPage(coin));
         }
 
         private void coinslist_Refreshing(object sender, EventArgs e)

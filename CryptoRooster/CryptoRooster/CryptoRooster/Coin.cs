@@ -2,7 +2,7 @@
 
 namespace CryptoRooster
 {
-    class Coin
+    public class Coin
     {
         //[JsonProperty("id")]
         //public string Id { get; set; }

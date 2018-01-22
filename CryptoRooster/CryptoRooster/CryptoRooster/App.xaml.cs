@@ -14,7 +14,11 @@ namespace CryptoRooster
         {
             InitializeComponent();
 
-            MainPage = new CoinDetailPage(new MainPage());
+            MainPage = new NavigationPage(new MainPage())
+            {
+                BarBackgroundColor = Color.LightSlateGray,
+                BarTextColor = Color.White
+            };
         }
 
         protected override void OnStart()
