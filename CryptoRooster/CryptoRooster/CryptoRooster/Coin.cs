@@ -4,6 +4,7 @@ namespace CryptoRooster
 {
     public class Coin
     {
+        private string imageUrl = string.Empty;
         //[JsonProperty("id")]
         //public string Id { get; set; }
 
@@ -48,7 +49,21 @@ namespace CryptoRooster
 
         //[JsonProperty("last_updated")]
         //public string LastUpdated { get; set; }
-        
-        public string ImageUrl { get; set; }
+
+        public string ImageUrl
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(imageUrl))
+                {
+                    imageUrl = "http://lorempixel.com/100/100/people/1/";
+                }
+                return imageUrl;
+            }
+            set
+            {
+                imageUrl = value;
+            }
+        }
     }
 }

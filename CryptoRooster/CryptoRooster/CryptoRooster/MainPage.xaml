@@ -6,24 +6,24 @@
              NavigationPage.HasNavigationBar="False">
 
     <StackLayout>
-        <SearchBar Placeholder="Search..." TextChanged="SearchBar_TextChanged"/>
+        <SearchBar Placeholder="Search..." TextChanged="SearchBar_TextChanged" />
         <ListView x:Name="coinslist" HasUnevenRows="True"
                       ItemSelected="coinslist_ItemSelected"
                       ItemTapped="coinslist_ItemTapped"
                       IsPullToRefreshEnabled="True" 
                       Refreshing="coinslist_Refreshing"
-                      BackgroundColor="DarkSlateGray"
+                      BackgroundColor="DimGray"
                       SeparatorVisibility="None"
                       >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Frame  CornerRadius="10"
+                        <Frame  CornerRadius="5"
                                 OutlineColor="White"
                                 Padding="0"
-                                BackgroundColor="SlateGray"
+                                BackgroundColor="Gray"
                                 Margin="5,5,5,5">
-                            <StackLayout Orientation="Horizontal" Padding="5" Margin="5,5,5,5" BackgroundColor="SlateGray">
+                            <StackLayout Orientation="Horizontal" Padding="5" Margin="5,5,5,5" BackgroundColor="Gray">
                                 <Image Source="{Binding ImageUrl}"/>
                                 <StackLayout HorizontalOptions="StartAndExpand">
                                     <Label Text="{Binding Name}" TextColor="White"/>
