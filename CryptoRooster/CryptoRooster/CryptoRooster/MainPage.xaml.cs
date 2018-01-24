@@ -17,12 +17,12 @@ namespace CryptoRooster
         public MainPage()
         {
             InitializeComponent();
+            GetCoins();
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            GetCoins();
         }
         private async void GetCoins()
         {
@@ -58,6 +58,12 @@ namespace CryptoRooster
             {
                 coinslist.ItemsSource = coins;
             }
+        }
+
+        private void FavouriteButton_Clicked(object sender, EventArgs e)
+        {
+            var button = this.FindByName<Button>("btnFavourite");
+            button.Image = ImageSource.FromFile("f2afb6f7.png") as FileImageSource;
         }
     }
 }

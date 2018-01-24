@@ -24,6 +24,7 @@ namespace CryptoRooster
         async private void Button_Clicked(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
+            
         }
     }
 }

@@ -3,30 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:CryptoRooster"
              x:Class="CryptoRooster.MainPage"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#032a49">
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical" Spacing="0" BackgroundColor="DimGray">
+        <StackLayout Orientation="Vertical" Spacing="0" x:Name="stacklayout" BackgroundColor="#032a49">
             <Frame CornerRadius="25"
-                   OutlineColor="Gray"
-                   BackgroundColor="Gray"
+                   OutlineColor="#043862"
+                   BackgroundColor="#043862"
                    Padding="3"
-                   Margin="10,5,10,0">
+                   Margin="10,5,10,5">
                 <SearchBar Placeholder="Search..." 
                            TextChanged="SearchBar_TextChanged"
-                           BackgroundColor="Gray"
-                           PlaceholderColor="Gray"/>
+                           BackgroundColor="#043862"
+                           PlaceholderColor="#ffffff"
+                           Margin="0,0,0,-5"
+                           />
             </Frame>
             <ListView x:Name="coinslist" HasUnevenRows="True"
                         ItemSelected="coinslist_ItemSelected"
                         ItemTapped="coinslist_ItemTapped"
                         IsPullToRefreshEnabled="True" 
                         Refreshing="coinslist_Refreshing"
-                        BackgroundColor="DimGray"
+                        BackgroundColor="#032a49"
                         SeparatorVisibility="None">
                 <ListView.Header>
                     <Label Text="Top 50 Currencies based on Coinmarcetcap"
                            TextColor="White"
-                           BackgroundColor="DimGray"
+                           BackgroundColor="#032a49"
                            HorizontalTextAlignment="Center"
                            VerticalTextAlignment="Center"
                            FontSize="Default"
@@ -39,16 +42,31 @@
                             <Frame  CornerRadius="5"
                                     OutlineColor="White"
                                     Padding="2"
-                                    BackgroundColor="Gray"
-                                    Margin="3">
-                                <StackLayout Orientation="Horizontal" Padding="5" Margin="2" BackgroundColor="Gray">
-                                    <Image Source="{Binding ImageUrl}"/>
-                                    <StackLayout HorizontalOptions="StartAndExpand">
+                                    BackgroundColor="#043862"
+                                    Margin="6,4">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="6*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{Binding ImageUrl}" Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="1,2"/>
+                                    <StackLayout Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" >
                                         <Label Text="{Binding Name}" TextColor="White"/>
                                         <Label Text="{Binding PriceUsd}" TextColor="WhiteSmoke"/>
                                     </StackLayout>
-                                    <Button Text="H"/>
-                                </StackLayout>
+                                    <Image Source="icon.png" Grid.Column="2" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="1,2"/>
+                                    <Button x:Name="btnFavourite"
+                                            Grid.Column="3" 
+                                            Clicked="FavouriteButton_Clicked"
+                                            Image="icon.png" 
+                                            HorizontalOptions="Fill" 
+                                            VerticalOptions="Fill" 
+                                            Margin="0" 
+                                            BackgroundColor="#043862" 
+                                            BorderColor="#043862"/>
+                                </Grid>
                             </Frame>
                         </ViewCell>
                     </DataTemplate>
