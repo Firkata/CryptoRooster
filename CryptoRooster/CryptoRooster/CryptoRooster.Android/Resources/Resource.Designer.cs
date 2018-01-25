@@ -1950,7 +1950,7 @@ namespace CryptoRooster.Droid
 			public const int design_snackbar_background = 2130837580;
 			
 			// aapt resource value: 0x7f02004d
-			public const int f2afb6f7 = 2130837581;
+			public const int heart = 2130837581;
 			
 			// aapt resource value: 0x7f02004e
 			public const int ic_audiotrack = 2130837582;

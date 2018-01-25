@@ -23,8 +23,8 @@ namespace CryptoRooster
 
         async private void Button_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PopAsync();
-            
+            //await Navigation.PopAsync();
+            await Navigation.PushModalAsync(new Page1());
         }
     }
 }

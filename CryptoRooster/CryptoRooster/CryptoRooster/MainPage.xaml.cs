@@ -39,7 +39,7 @@ namespace CryptoRooster
         async private void coinslist_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var coin = e.Item as Coin;
-            await Navigation.PushAsync(new CoinDetailPage(coin));
+            await Navigation.PushModalAsync(new CoinDetailPage(coin));
         }
 
         private void coinslist_Refreshing(object sender, EventArgs e)
@@ -62,8 +62,15 @@ namespace CryptoRooster
 
         private void FavouriteButton_Clicked(object sender, EventArgs e)
         {
-            var button = this.FindByName<Button>("btnFavourite");
-            button.Image = ImageSource.FromFile("f2afb6f7.png") as FileImageSource;
+            try
+            {
+                var button = sender as Button;
+                button.Image = ImageSource.FromFile("f2afb6f7.png") as FileImageSource;
+            }
+            catch
+            {
+                
+            }
         }
     }
 }
