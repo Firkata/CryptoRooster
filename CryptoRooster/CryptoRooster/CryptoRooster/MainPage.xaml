@@ -49,22 +49,23 @@
                                         <ColumnDefinition Width="2*"/>
                                         <ColumnDefinition Width="6*"/>
                                         <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1.5*"/>
                                     </Grid.ColumnDefinitions>
                                     <Image Source="{Binding ImageUrl}" Grid.Column="0" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="1,2"/>
                                     <StackLayout Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" >
                                         <Label Text="{Binding Name}" TextColor="White"/>
                                         <Label Text="{Binding PriceUsd}" TextColor="WhiteSmoke"/>
                                     </StackLayout>
-                                    <Image Source="heart.png" Grid.Column="2" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="1,2"/>
+                                    <Image Source="bell_active.png" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Margin="0"/>
                                     <Button Grid.Column="3" 
                                             Clicked="FavouriteButton_Clicked"
-                                            Image="icon.png" 
-                                            HorizontalOptions="Fill" 
-                                            VerticalOptions="Fill" 
+                                            Image="heart.png" 
+                                            HorizontalOptions="Center" 
+                                            VerticalOptions="Center" 
                                             Margin="0" 
                                             BackgroundColor="#043862" 
-                                            BorderColor="#043862"/>
+                                            BorderColor="#043862"
+                                            />
                                 </Grid>
                             </Frame>
                         </ViewCell>
