@@ -65,7 +65,7 @@ namespace CryptoRooster
             try
             {
                 var button = sender as Button;
-                button.Image = ImageSource.FromFile("heart_red.png") as FileImageSource;
+                button.Image = ImageSource.FromFile("h2.png") as FileImageSource;
             }
             catch
             {

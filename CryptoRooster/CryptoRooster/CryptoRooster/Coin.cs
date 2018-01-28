@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
+using Xamarin.Forms;
 
 namespace CryptoRooster
 {
     public class Coin
     {
         private string imageUrl = string.Empty;
+        private Image imageFavourite = new Image { Source = "heart.png" };
         //[JsonProperty("id")]
         //public string Id { get; set; }
 
@@ -65,5 +67,9 @@ namespace CryptoRooster
                 imageUrl = value;
             }
         }
+
+        public Button Button { get; set; }
+        public bool IsFavourite { get; set; }
+        public Image ImageFavourite { get => imageFavourite; set => imageFavourite = value; }
     }
 }
