@@ -65,12 +65,35 @@ namespace CryptoRooster
             try
             {
                 var button = sender as Button;
-                button.Image = ImageSource.FromFile("h2.png") as FileImageSource;
+                var coin = button.CommandParameter as Coin;
+                if (coin.IsFavourite)
+                {
+                    button.Image = ImageSource.FromFile("h.png") as FileImageSource;
+                    coin.IsFavourite = false;
+                }
+                else
+                {
+                    button.Image = ImageSource.FromFile("h2.png") as FileImageSource;
+                    coin.IsFavourite = true;
+                }
             }
             catch
             {
                 
             }
+        }
+
+        async private void test_Clicked(object sender, EventArgs e)
+        {
+            List<Coin> coins = coinslist.ItemsSource as List<Coin>;
+            //List<Coin> favcoins = coins.Where(c => c.IsFavourite).ToList();
+            //await Navigation.PushModalAsync(new FavouriteCoinsPage(favcoins));
+            coinslist.ItemsSource = coins.Where(c => c.IsFavourite).ToList();
+        }
+
+        private void test2_Clicked(object sender, EventArgs e)
+        {
+            coinslist.ItemsSource = coins;
         }
     }
 }

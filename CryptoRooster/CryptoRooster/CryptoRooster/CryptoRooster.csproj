@@ -42,11 +42,11 @@
     <Compile Include="CoinDetailPage.xaml.cs">
       <DependentUpon>CoinDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FavouriteCoinsPage.xaml.cs">
+      <DependentUpon>FavouriteCoinsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Page1.xaml.cs">
-      <DependentUpon>Page1.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -96,7 +96,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Page1.xaml">
+    <EmbeddedResource Include="FavouriteCoinsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

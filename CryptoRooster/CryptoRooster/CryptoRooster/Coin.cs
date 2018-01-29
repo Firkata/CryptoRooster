@@ -67,9 +67,7 @@ namespace CryptoRooster
                 imageUrl = value;
             }
         }
-
-        public Button Button { get; set; }
+        
         public bool IsFavourite { get; set; }
-        public Image ImageFavourite { get => imageFavourite; set => imageFavourite = value; }
     }
 }
