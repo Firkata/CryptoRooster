@@ -20,12 +20,13 @@
                            />
             </Frame>
             <ListView x:Name="coinslist" HasUnevenRows="True"
-                        ItemSelected="coinslist_ItemSelected"
-                        ItemTapped="coinslist_ItemTapped"
-                        IsPullToRefreshEnabled="True" 
-                        Refreshing="coinslist_Refreshing"
-                        BackgroundColor="#032a49"
-                        SeparatorVisibility="None">
+                      ItemSelected="coinslist_ItemSelected"
+                      ItemTapped="coinslist_ItemTapped"
+                      IsPullToRefreshEnabled="True" 
+                      Refreshing="coinslist_Refreshing"
+                      BackgroundColor="#032a49"
+                      SeparatorVisibility="None"
+                      CachingStrategy="RecycleElement">
                 <ListView.Header>
                     <Label Text="Top 50 Currencies based on Coinmarcetcap"
                            TextColor="White"
