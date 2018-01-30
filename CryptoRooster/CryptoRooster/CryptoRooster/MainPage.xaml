@@ -7,6 +7,7 @@
              BackgroundColor="#032a49">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical" Spacing="0" x:Name="stacklayout" BackgroundColor="#032a49">
+            <StackLayout Orientation="Vertical" Spacing="0">
             <Frame CornerRadius="25"
                    OutlineColor="#043862"
                    BackgroundColor="#043862"
@@ -19,10 +20,32 @@
                            Margin="0,0,0,-5"
                            />
             </Frame>
-            <Button x:Name="test" Clicked="test_Clicked"/>
-            <Button x:Name="test2" Clicked="test2_Clicked"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="test2" 
+                        Clicked="test2_Clicked"
+                        Text="Top 100"
+                        FontSize="Medium"
+                        BackgroundColor="#032a49"
+                        BorderColor="White"
+                        BorderWidth="1"
+                        TextColor="White"
+                        Grid.Column="0" />
+                <Button x:Name="test" 
+                        Clicked="test_Clicked" 
+                        Text="Favourites"
+                        FontSize="Medium"
+                        BackgroundColor="#032a49"
+                        BorderColor="White"
+                        TextColor="White"
+                        Grid.Column="1"/>
+                
+            </Grid>
+            </StackLayout>
             <ListView x:Name="coinslist" HasUnevenRows="True"
-                      ItemSelected="coinslist_ItemSelected"
                       ItemTapped="coinslist_ItemTapped"
                       IsPullToRefreshEnabled="True" 
                       Refreshing="coinslist_Refreshing"
@@ -30,14 +53,17 @@
                       SeparatorVisibility="None"
                       CachingStrategy="RecycleElement">
                 <ListView.Header>
-                    <Label Text="Top 50 Currencies based on Coinmarcetcap"
+                    <Label Text="Top 100 Currencies based on Coinmarcetcap"
                            TextColor="White"
                            BackgroundColor="#032a49"
                            HorizontalTextAlignment="Center"
                            VerticalTextAlignment="Center"
-                           FontSize="Medium"
-                           Margin="10"
-                           />
+                           FontSize="Small"
+                           Margin="10">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
                 </ListView.Header>
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -63,13 +89,12 @@
                                     <Button Grid.Column="3" 
                                             Clicked="FavouriteButton_Clicked"
                                             CommandParameter="{Binding .}"
-                                            Image="h.png" 
+                                            Image="heart_empty.png" 
                                             HorizontalOptions="Fill" 
                                             VerticalOptions="Fill" 
                                             Margin="0" 
                                             BackgroundColor="#043862" 
-                                            BorderColor="#043862"
-                                            />
+                                            BorderColor="#043862"/>
                                 </Grid>
                             </Frame>
                         </ViewCell>

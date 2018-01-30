@@ -30,15 +30,14 @@
                                 </StackLayout>
                                 <Image Source="bell_active.png" Grid.Column="2" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="0"/>
                                 <Button Grid.Column="3" 
-                                            Clicked="FavouriteButton_Clicked"
-                                            CommandParameter="{Binding .}"
-                                            Image="h.png" 
-                                            HorizontalOptions="Fill" 
-                                            VerticalOptions="Fill" 
-                                            Margin="0" 
-                                            BackgroundColor="#043862" 
-                                            BorderColor="#043862"
-                                            />
+                                        Clicked="FavouriteButton_Clicked"
+                                        CommandParameter="{Binding .}"
+                                        Image="h.png" 
+                                        HorizontalOptions="Fill" 
+                                        VerticalOptions="Fill" 
+                                        Margin="0" 
+                                        BackgroundColor="#043862" 
+                                        BorderColor="#043862"/>
                             </Grid>
                         </Frame>
                     </ViewCell>

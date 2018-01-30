@@ -31,13 +31,9 @@ namespace CryptoRooster
             coinslist.ItemsSource = coins;
         }
 
-        private void coinslist_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            coinslist.SelectedItem = null;
-        }
-
         async private void coinslist_ItemTapped(object sender, ItemTappedEventArgs e)
         {
+            coinslist.SelectedItem = null;
             var coin = e.Item as Coin;
             await Navigation.PushModalAsync(new CoinDetailPage(coin));
         }
@@ -68,12 +64,12 @@ namespace CryptoRooster
                 var coin = button.CommandParameter as Coin;
                 if (coin.IsFavourite)
                 {
-                    button.Image = ImageSource.FromFile("h.png") as FileImageSource;
+                    button.Image = ImageSource.FromFile("heart_empty.png") as FileImageSource;
                     coin.IsFavourite = false;
                 }
                 else
                 {
-                    button.Image = ImageSource.FromFile("h2.png") as FileImageSource;
+                    button.Image = ImageSource.FromFile("heart.png") as FileImageSource;
                     coin.IsFavourite = true;
                 }
             }
@@ -95,5 +91,12 @@ namespace CryptoRooster
         {
             coinslist.ItemsSource = coins;
         }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            var label = sender as Label;
+            label.IsEnabled = false;
+        }
+        
     }
 }
