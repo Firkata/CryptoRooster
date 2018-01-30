@@ -7,25 +7,26 @@
              BackgroundColor="#032a49">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical" Spacing="0" x:Name="stacklayout" BackgroundColor="#032a49">
-            <StackLayout Orientation="Vertical" Spacing="0">
-            <Frame CornerRadius="25"
+            <Frame CornerRadius="20"
                    OutlineColor="#043862"
                    BackgroundColor="#043862"
                    Padding="3"
-                   Margin="10,5,10,5">
+                   Margin="10,5,10,5"
+                   HasShadow="False">
                 <SearchBar Placeholder="Search..." 
                            TextChanged="SearchBar_TextChanged"
                            BackgroundColor="#043862"
                            PlaceholderColor="#ffffff"
                            Margin="0,0,0,-5"
+                           HeightRequest="40"
                            />
             </Frame>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Button x:Name="test2" 
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="test2" 
                         Clicked="test2_Clicked"
                         Text="Top 100"
                         FontSize="Medium"
@@ -34,7 +35,7 @@
                         BorderWidth="1"
                         TextColor="White"
                         Grid.Column="0" />
-                <Button x:Name="test" 
+                    <Button x:Name="test" 
                         Clicked="test_Clicked" 
                         Text="Favourites"
                         FontSize="Medium"
@@ -42,10 +43,9 @@
                         BorderColor="White"
                         TextColor="White"
                         Grid.Column="1"/>
-                
-            </Grid>
-            </StackLayout>
-            <ListView x:Name="coinslist" HasUnevenRows="True"
+
+                </Grid>
+                <ListView x:Name="coinslist" HasUnevenRows="True"
                       ItemTapped="coinslist_ItemTapped"
                       IsPullToRefreshEnabled="True" 
                       Refreshing="coinslist_Refreshing"
