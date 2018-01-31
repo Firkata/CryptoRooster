@@ -42,6 +42,7 @@
     <Compile Include="CoinDetailPage.xaml.cs">
       <DependentUpon>CoinDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConnectionHelper.cs" />
     <Compile Include="FavouriteCoinsPage.xaml.cs">
       <DependentUpon>FavouriteCoinsPage.xaml</DependentUpon>
     </Compile>
@@ -63,6 +64,9 @@
   <ItemGroup>
     <Reference Include="ModernHttpClient, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\modernhttpclient.2.4.2\lib\Portable-Net45+WinRT45+WP8+WPA81\ModernHttpClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Android">
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v8.0\Mono.Android.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>

@@ -69,5 +69,15 @@ namespace CryptoRooster
         }
         
         public bool IsFavourite { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            Coin coin = obj as Coin;
+            if (coin == null)
+                return false;
+            else
+                return Name.Equals(coin.Name);
+
+        }
     }
 }

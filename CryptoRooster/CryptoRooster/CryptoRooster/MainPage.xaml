@@ -52,7 +52,7 @@
                       BackgroundColor="#032a49"
                       SeparatorVisibility="None"
                       CachingStrategy="RecycleElement">
-                <ListView.Header>
+                <!--<ListView.Header>
                     <Label Text="Top 100 Currencies based on Coinmarcetcap"
                            TextColor="White"
                            BackgroundColor="#032a49"
@@ -64,7 +64,7 @@
                             <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
                         </Label.GestureRecognizers>
                     </Label>
-                </ListView.Header>
+                </ListView.Header>-->
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
