@@ -13,10 +13,9 @@ namespace CryptoRooster
     {
         string url = "https://api.coinmarketcap.com/v1/ticker/";
         HttpClient client = new HttpClient(new NativeMessageHandler());
-        List<Coin> coins =  new List<Coin>();
+        ObservableCollection<Coin> coins =  new ObservableCollection<Coin>();
         ObservableCollection<Coin> favcoins;
-        delegate void kur(object sender, EventArgs e);
-        event kur shure;
+        
 
         public MainPage()
         {
@@ -58,7 +57,7 @@ namespace CryptoRooster
             //}
 
             var jsonContent = await client.GetStringAsync(url);
-            coins = JsonConvert.DeserializeObject<List<Coin>>(jsonContent);
+            coins = JsonConvert.DeserializeObject<ObservableCollection<Coin>>(jsonContent);
 
             if (favcoins != null || favcoins.Count != 0)
             {
@@ -110,14 +109,22 @@ namespace CryptoRooster
                 if (coin.IsFavourite)
                 {
                     button.Image = ImageSource.FromFile("heart_empty.png") as FileImageSource;
-                    favcoins.Remove(coin);
                     coin.IsFavourite = false;
+                    //coin.FavouriteImage = "heart_empty.png";
+                    favcoins.Remove(coin);
+                    //int index = coins.FindIndex(c => c.Name == coin.Name);
+                    //coins[index].IsFavourite = false;
+                    //coins[index].FavouriteImage = "heart_empty.png";
                 }
                 else
                 {
                     button.Image = ImageSource.FromFile("heart.png") as FileImageSource;
-                    favcoins.Add(coin);
                     coin.IsFavourite = true;
+                    //coin.FavouriteImage = "heart.png";
+                    favcoins.Add(coin);
+                    //int index = coins.FindIndex(c => c.Name == coin.Name);
+                    //coins[index].IsFavourite = true;
+                    //coins[index].FavouriteImage = "heart.png";
                 }
             }
             catch
@@ -126,16 +133,16 @@ namespace CryptoRooster
             }
         }
 
-        private void test_Clicked(object sender, EventArgs e)
+        private void favourite_Clicked(object sender, EventArgs e)
         {
-            List<Coin> coins = coinslist.ItemsSource as List<Coin>;
+            //List<Coin> coins = coinslist.ItemsSource as List<Coin>;
             //List<Coin> favcoins = coins.Where(c => c.IsFavourite).ToList();
             //await Navigation.PushModalAsync(new FavouriteCoinsPage(favcoins));
             //coinslist.ItemsSource = coins.Where(c => c.IsFavourite).ToList();
             coinslist.ItemsSource = favcoins;
         }
 
-        private void test2_Clicked(object sender, EventArgs e)
+        private void top100_Clicked(object sender, EventArgs e)
         {
             coinslist.ItemsSource = coins;
         }

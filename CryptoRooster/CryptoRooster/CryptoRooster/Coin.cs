@@ -7,6 +7,7 @@ namespace CryptoRooster
     {
         private string imageUrl = string.Empty;
         private Image imageFavourite = new Image { Source = "heart.png" };
+        private string favouriteImage = string.Empty;
         //[JsonProperty("id")]
         //public string Id { get; set; }
 
@@ -70,6 +71,24 @@ namespace CryptoRooster
         
         public bool IsFavourite { get; set; }
 
+        public string FavouriteImage
+        {
+            get
+            {
+                if (IsFavourite)
+                {
+                    return "heart.png";
+                }
+                else
+                {
+                    return "heart_empty.png";
+                }
+            }
+            set
+            {
+                favouriteImage = value;
+            }
+        }
         public override bool Equals(object obj)
         {
             Coin coin = obj as Coin;
@@ -78,6 +97,11 @@ namespace CryptoRooster
             else
                 return Name.Equals(coin.Name);
 
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
         }
     }
 }

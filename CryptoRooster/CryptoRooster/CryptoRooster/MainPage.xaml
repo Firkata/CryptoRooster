@@ -26,8 +26,8 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="test2" 
-                        Clicked="test2_Clicked"
+                    <Button x:Name="top100" 
+                        Clicked="top100_Clicked"
                         Text="Top 100"
                         FontSize="Medium"
                         BackgroundColor="#032a49"
@@ -35,8 +35,8 @@
                         BorderWidth="1"
                         TextColor="White"
                         Grid.Column="0" />
-                    <Button x:Name="test" 
-                        Clicked="test_Clicked" 
+                    <Button x:Name="favourite" 
+                        Clicked="favourite_Clicked" 
                         Text="Favourites"
                         FontSize="Medium"
                         BackgroundColor="#032a49"
@@ -89,7 +89,7 @@
                                     <Button Grid.Column="3" 
                                             Clicked="FavouriteButton_Clicked"
                                             CommandParameter="{Binding .}"
-                                            Image="heart_empty.png" 
+                                            Image="{Binding FavouriteImage}"
                                             HorizontalOptions="Fill" 
                                             VerticalOptions="Fill" 
                                             Margin="0" 

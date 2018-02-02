@@ -42,7 +42,7 @@
     <Compile Include="CoinDetailPage.xaml.cs">
       <DependentUpon>CoinDetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ConnectionHelper.cs" />
+    <Compile Include="Helpers\ConnectionHelper.cs" />
     <Compile Include="FavouriteCoinsPage.xaml.cs">
       <DependentUpon>FavouriteCoinsPage.xaml</DependentUpon>
     </Compile>
