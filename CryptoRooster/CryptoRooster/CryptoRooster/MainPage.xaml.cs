@@ -21,7 +21,7 @@ namespace CryptoRooster
         {
             favcoins = new ObservableCollection<Coin>();
             InitializeComponent();
-            test2.FontSize = test.FontSize + 2;
+            allcoins.FontSize = favourites.FontSize + 2;
         }
 
         protected override void OnAppearing()
@@ -101,7 +101,7 @@ namespace CryptoRooster
             }
         }
 
-        private void FavouriteButton_Clicked(object sender, EventArgs e)
+        private void Heart_Clicked(object sender, EventArgs e)
         {
             try
             {
@@ -134,12 +134,12 @@ namespace CryptoRooster
             }
         }
 
-        private void favourite_Clicked(object sender, EventArgs e)
+        private void Favourites_Clicked(object sender, EventArgs e)
         {
-            test.TextColor = Color.White;
-            test2.TextColor = Color.Gray;
-            test.FontSize = test.FontSize + 2;
-            test2.FontSize = test.FontSize - 2;
+            favourites.TextColor = Color.White;
+            allcoins.TextColor = Color.Gray;
+            favourites.FontSize = favourites.FontSize + 2;
+            allcoins.FontSize = allcoins.FontSize - 2;
             List<Coin> coins = coinslist.ItemsSource as List<Coin>;
             //List<Coin> favcoins = coins.Where(c => c.IsFavourite).ToList();
             //await Navigation.PushModalAsync(new FavouriteCoinsPage(favcoins));
@@ -147,12 +147,12 @@ namespace CryptoRooster
             coinslist.ItemsSource = favcoins;
         }
 
-        private void top100_Clicked(object sender, EventArgs e)
+        private void Allcoins_Clicked(object sender, EventArgs e)
         {
-            test.TextColor = Color.Gray;
-            test2.TextColor = Color.White;
-            test.FontSize = test.FontSize - 2;
-            test2.FontSize = test.FontSize + 2;
+            favourites.TextColor = Color.Gray;
+            allcoins.TextColor = Color.White;
+            favourites.FontSize = favourites.FontSize - 2;
+            allcoins.FontSize = allcoins.FontSize + 2;
             coinslist.ItemsSource = coins;
         }
 

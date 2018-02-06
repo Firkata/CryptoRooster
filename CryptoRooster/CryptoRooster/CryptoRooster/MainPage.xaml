@@ -21,22 +21,22 @@
                            HeightRequest="40"
                            />
             </Frame>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button x:Name="top100" 
-                        Clicked="top100_Clicked"
-                        Text="Top 100"
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="allcoins" 
+                        Clicked="Allcoins_Clicked"
+                        Text="All Coins"
                         FontSize="Medium"
                         BackgroundColor="#032a49"
                         BorderColor="White"
                         BorderWidth="1"
                         TextColor="White"
                         Grid.Column="0" />
-                    <Button x:Name="favourite" 
-                        Clicked="favourite_Clicked" 
+                <Button x:Name="favourites" 
+                        Clicked="Favourites_Clicked" 
                         Text="Favourites"
                         FontSize="Medium"
                         BackgroundColor="#032a49"
@@ -44,14 +44,15 @@
                         TextColor="Gray"
                         Grid.Column="1"/>
 
-                </Grid>
-                <ListView x:Name="coinslist" HasUnevenRows="True"
+            </Grid>
+            <ListView x:Name="coinslist" HasUnevenRows="True"
                       ItemTapped="coinslist_ItemTapped"
                       IsPullToRefreshEnabled="True" 
                       Refreshing="coinslist_Refreshing"
                       BackgroundColor="#032a49"
                       SeparatorVisibility="None"
-                      CachingStrategy="RecycleElement">
+                      CachingStrategy="RetainElement"
+                      >
                 <!--<ListView.Header>
                     <Label Text="Top 100 Currencies based on Coinmarcetcap"
                            TextColor="White"
@@ -87,7 +88,7 @@
                                     </StackLayout>
                                     <Image Source="bell_active.png" Grid.Column="2" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="0"/>
                                     <Button Grid.Column="3" 
-                                            Clicked="FavouriteButton_Clicked"
+                                            Clicked="Heart_Clicked"
                                             CommandParameter="{Binding .}"
                                             Image="{Binding FavouriteImage}"
                                             HorizontalOptions="Fill" 

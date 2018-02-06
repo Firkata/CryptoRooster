@@ -8,8 +8,9 @@ namespace CryptoRooster
         private string imageUrl = string.Empty;
         private Image imageFavourite = new Image { Source = "heart.png" };
         private string favouriteImage = string.Empty;
-        //[JsonProperty("id")]
-        //public string Id { get; set; }
+
+        [JsonProperty("id")]
+        public string Id { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
