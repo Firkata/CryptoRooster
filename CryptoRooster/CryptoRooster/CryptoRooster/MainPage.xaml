@@ -41,7 +41,7 @@
                         FontSize="Medium"
                         BackgroundColor="#032a49"
                         BorderColor="White"
-                        TextColor="White"
+                        TextColor="Gray"
                         Grid.Column="1"/>
 
                 </Grid>
@@ -75,7 +75,7 @@
                                     Margin="6,4">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="1*"/>
                                         <ColumnDefinition Width="6*"/>
                                         <ColumnDefinition Width="0.8*"/>
                                         <ColumnDefinition Width="1.3*"/>

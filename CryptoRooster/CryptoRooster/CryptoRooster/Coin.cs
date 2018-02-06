@@ -59,7 +59,7 @@ namespace CryptoRooster
             {
                 if (string.IsNullOrEmpty(imageUrl))
                 {
-                    imageUrl = "http://lorempixel.com/100/100/people/1/";
+                    imageUrl = "https://files.coinmarketcap.com/static/img/coins/64x64/" + Id + ".png";
                 }
                 return imageUrl;
             }
