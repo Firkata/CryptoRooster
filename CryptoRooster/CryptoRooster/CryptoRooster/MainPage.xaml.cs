@@ -11,7 +11,7 @@ namespace CryptoRooster
 {
     public partial class MainPage : ContentPage
     {
-        string url = "https://api.coinmarketcap.com/v1/ticker/";
+        string url = "https://api.coinmarketcap.com/v1/ticker/?start=0&limit=500";//"https://api.coinmarketcap.com/v1/ticker/";
         HttpClient client = new HttpClient(new NativeMessageHandler());
         ObservableCollection<Coin> coins =  new ObservableCollection<Coin>();
         ObservableCollection<Coin> favcoins;
@@ -21,6 +21,7 @@ namespace CryptoRooster
         {
             favcoins = new ObservableCollection<Coin>();
             InitializeComponent();
+            test2.FontSize = test.FontSize + 2;
         }
 
         protected override void OnAppearing()
@@ -135,7 +136,11 @@ namespace CryptoRooster
 
         private void favourite_Clicked(object sender, EventArgs e)
         {
-            //List<Coin> coins = coinslist.ItemsSource as List<Coin>;
+            test.TextColor = Color.White;
+            test2.TextColor = Color.Gray;
+            test.FontSize = test.FontSize + 2;
+            test2.FontSize = test.FontSize - 2;
+            List<Coin> coins = coinslist.ItemsSource as List<Coin>;
             //List<Coin> favcoins = coins.Where(c => c.IsFavourite).ToList();
             //await Navigation.PushModalAsync(new FavouriteCoinsPage(favcoins));
             //coinslist.ItemsSource = coins.Where(c => c.IsFavourite).ToList();
@@ -144,6 +149,10 @@ namespace CryptoRooster
 
         private void top100_Clicked(object sender, EventArgs e)
         {
+            test.TextColor = Color.Gray;
+            test2.TextColor = Color.White;
+            test.FontSize = test.FontSize - 2;
+            test2.FontSize = test.FontSize + 2;
             coinslist.ItemsSource = coins;
         }
 
