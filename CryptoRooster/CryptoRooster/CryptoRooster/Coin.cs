@@ -1,13 +1,15 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 
 namespace CryptoRooster
 {
-    public class Coin
+    public class Coin : INotifyPropertyChanged
     {
-        private string imageUrl = string.Empty;
-        private Image imageFavourite = new Image { Source = "heart.png" };
-        private string favouriteImage = string.Empty;
+        private string _imageUrl = string.Empty;
+        private Image _imageFavourite = new Image { Source = "heart.png" };
+        private bool _isFavourite = false;
 
         [JsonProperty("id")]
         public string Id { get; set; }
@@ -58,19 +60,30 @@ namespace CryptoRooster
         {
             get
             {
-                if (string.IsNullOrEmpty(imageUrl))
+                if (string.IsNullOrEmpty(_imageUrl))
                 {
-                    imageUrl = "https://files.coinmarketcap.com/static/img/coins/64x64/" + Id + ".png";
+                    _imageUrl = "https://files.coinmarketcap.com/static/img/coins/64x64/" + Id + ".png";
                 }
-                return imageUrl;
+                return _imageUrl;
             }
             set
             {
-                imageUrl = value;
+                _imageUrl = value;
             }
         }
         
-        public bool IsFavourite { get; set; }
+        public bool IsFavourite
+        {
+            get { return _isFavourite; }
+            set
+            {
+                if(_isFavourite != value)
+                {
+                    _isFavourite = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public string FavouriteImage
         {
@@ -85,11 +98,15 @@ namespace CryptoRooster
                     return "heart_empty.png";
                 }
             }
-            set
-            {
-                favouriteImage = value;
-            }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public override bool Equals(object obj)
         {
             Coin coin = obj as Coin;

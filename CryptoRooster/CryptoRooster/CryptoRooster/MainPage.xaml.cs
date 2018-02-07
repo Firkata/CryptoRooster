@@ -11,15 +11,15 @@ namespace CryptoRooster
 {
     public partial class MainPage : ContentPage
     {
-        string url = "https://api.coinmarketcap.com/v1/ticker/?start=0&limit=500";//"https://api.coinmarketcap.com/v1/ticker/";
+        string url = "https://api.coinmarketcap.com/v1/ticker/?start=12&limit=5";//"https://api.coinmarketcap.com/v1/ticker/";
         HttpClient client = new HttpClient(new NativeMessageHandler());
-        ObservableCollection<Coin> coins =  new ObservableCollection<Coin>();
-        ObservableCollection<Coin> favcoins;
+        ObservableCollection<Coin> _coins;
+        ObservableCollection<Coin> _favcoins;
         
 
         public MainPage()
         {
-            favcoins = new ObservableCollection<Coin>();
+            _favcoins = new ObservableCollection<Coin>();
             InitializeComponent();
             allcoins.FontSize = favourites.FontSize + 2;
         }
@@ -39,7 +39,7 @@ namespace CryptoRooster
             }
             else
             {
-                DisplayAlert("Connection Error", "Internet is turned off", "OK");
+                DisplayAlert("Connection Error", "No Internet connection", "Dismiss");
                 return;
             }
         }
@@ -58,21 +58,23 @@ namespace CryptoRooster
             //}
 
             var jsonContent = await client.GetStringAsync(url);
-            coins = JsonConvert.DeserializeObject<ObservableCollection<Coin>>(jsonContent);
+            var coins = JsonConvert.DeserializeObject<List<Coin>>(jsonContent);
 
-            if (favcoins != null || favcoins.Count != 0)
+            _coins = new ObservableCollection<Coin>(coins);
+
+            if (_favcoins != null || _favcoins.Count != 0)
             {
-                foreach(Coin coin in favcoins)
+                foreach(Coin coin in _favcoins)
                 {
-                    if (coins.Contains(coin))
+                    if (_coins.Contains(coin))
                     {
-                        coins[coins.IndexOf(coin)].IsFavourite = true;
+                        _coins[_coins.IndexOf(coin)].IsFavourite = true;
                     }
                 }
             }
 
-            coinslist.ItemsSource = coins;
-            favcoins = new ObservableCollection<Coin>(coins.Where(c => c.IsFavourite).ToList());
+            coinslist.ItemsSource = _coins;
+            _favcoins = new ObservableCollection<Coin>(_coins.Where(c => c.IsFavourite).ToList());
         }
 
         async private void coinslist_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -93,11 +95,11 @@ namespace CryptoRooster
         {
             if (!string.IsNullOrWhiteSpace(e.NewTextValue))
             {
-                coinslist.ItemsSource = coins.Where(c => c.Name.ToLower().Contains(e.NewTextValue.ToLowerInvariant()));
+                coinslist.ItemsSource = _coins.Where(c => c.Name.ToLower().Contains(e.NewTextValue.ToLowerInvariant()));
             }
             else
             {
-                coinslist.ItemsSource = coins;
+                coinslist.ItemsSource = _coins;
             }
         }
 
@@ -112,7 +114,8 @@ namespace CryptoRooster
                     button.Image = ImageSource.FromFile("heart_empty.png") as FileImageSource;
                     coin.IsFavourite = false;
                     //coin.FavouriteImage = "heart_empty.png";
-                    favcoins.Remove(coin);
+                    _favcoins.Remove(coin);
+                    _coins.Where(c => c.Equals(coin.Name)).FirstOrDefault(c => c.IsFavourite = false);
                     //int index = coins.FindIndex(c => c.Name == coin.Name);
                     //coins[index].IsFavourite = false;
                     //coins[index].FavouriteImage = "heart_empty.png";
@@ -122,7 +125,8 @@ namespace CryptoRooster
                     button.Image = ImageSource.FromFile("heart.png") as FileImageSource;
                     coin.IsFavourite = true;
                     //coin.FavouriteImage = "heart.png";
-                    favcoins.Add(coin);
+                    _favcoins.Add(coin);
+                    _coins.Where(c => c.Equals(coin.Name)).FirstOrDefault(c => c.IsFavourite = true);
                     //int index = coins.FindIndex(c => c.Name == coin.Name);
                     //coins[index].IsFavourite = true;
                     //coins[index].FavouriteImage = "heart.png";
@@ -140,11 +144,8 @@ namespace CryptoRooster
             allcoins.TextColor = Color.Gray;
             favourites.FontSize = favourites.FontSize + 2;
             allcoins.FontSize = allcoins.FontSize - 2;
-            List<Coin> coins = coinslist.ItemsSource as List<Coin>;
-            //List<Coin> favcoins = coins.Where(c => c.IsFavourite).ToList();
-            //await Navigation.PushModalAsync(new FavouriteCoinsPage(favcoins));
-            //coinslist.ItemsSource = coins.Where(c => c.IsFavourite).ToList();
-            coinslist.ItemsSource = favcoins;
+
+            coinslist.ItemsSource = _favcoins;
         }
 
         private void Allcoins_Clicked(object sender, EventArgs e)
@@ -153,7 +154,8 @@ namespace CryptoRooster
             allcoins.TextColor = Color.White;
             favourites.FontSize = favourites.FontSize - 2;
             allcoins.FontSize = allcoins.FontSize + 2;
-            coinslist.ItemsSource = coins;
+            
+            coinslist.ItemsSource = _coins;
         }
 
         //private void TapGestureRecognizer_Tapped(object sender, EventArgs e)

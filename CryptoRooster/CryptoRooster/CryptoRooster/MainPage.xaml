@@ -51,7 +51,7 @@
                       Refreshing="coinslist_Refreshing"
                       BackgroundColor="#032a49"
                       SeparatorVisibility="None"
-                      CachingStrategy="RetainElement"
+                      CachingStrategy="RecycleElement"
                       >
                 <!--<ListView.Header>
                     <Label Text="Top 100 Currencies based on Coinmarcetcap"
