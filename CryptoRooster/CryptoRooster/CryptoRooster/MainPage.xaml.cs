@@ -15,7 +15,8 @@ namespace CryptoRooster
         HttpClient client = new HttpClient(new NativeMessageHandler());
         ObservableCollection<Coin> _coins;
         ObservableCollection<Coin> _favcoins;
-        
+        bool onFavouritePage = false;
+
 
         public MainPage()
         {
@@ -32,7 +33,7 @@ namespace CryptoRooster
 
         private void ValidateConnection()
         {
-            
+
             if (ConnectionHelper.CheckNetworkConnection())
             {
                 GetCoins();
@@ -51,7 +52,28 @@ namespace CryptoRooster
 
             _coins = new ObservableCollection<Coin>(coins);
 
-            coinslist.ItemsSource = _coins;
+            if (_favcoins != null || _favcoins.Count != 0)
+            {
+                foreach (Coin coin in _favcoins)
+                {
+                    foreach (Coin c in _favcoins)
+                    {
+                        if (coins.Contains(coin))
+                        {
+                            if (_coins.Contains(coin))
+                            {
+                                coins[coins.IndexOf(coin)].IsFavourite = true;
+                                _coins[_coins.IndexOf(coin)].IsFavourite = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (onFavouritePage)
+                coinslist.ItemsSource = _coins.Where(c => c.IsFavourite);
+            else
+                coinslist.ItemsSource = _coins;
         }
 
         async private void coinslist_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -102,6 +124,8 @@ namespace CryptoRooster
 
         private void Favourites_Clicked(object sender, EventArgs e)
         {
+            onFavouritePage = true;
+
             favourites.TextColor = Color.White;
             allcoins.TextColor = Color.Gray;
             favourites.FontSize = favourites.FontSize + 2;
@@ -112,11 +136,13 @@ namespace CryptoRooster
 
         private void Allcoins_Clicked(object sender, EventArgs e)
         {
+            onFavouritePage = false;
+
             favourites.TextColor = Color.Gray;
             allcoins.TextColor = Color.White;
             favourites.FontSize = favourites.FontSize - 2;
             allcoins.FontSize = allcoins.FontSize + 2;
-            
+
             coinslist.ItemsSource = _coins;
         }
 

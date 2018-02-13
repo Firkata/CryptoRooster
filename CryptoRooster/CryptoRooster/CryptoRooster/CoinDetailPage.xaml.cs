@@ -21,10 +21,9 @@ namespace CryptoRooster
             InitializeComponent();
         }
 
-        async private void Button_Clicked(object sender, EventArgs e)
+        private void Button_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PopAsync();
-            //await Navigation.PushModalAsync(new FavouriteCoinsPage());
+            DisplayAlert("Ъндър констръкшън", "=(", "Oke");
         }
     }
 }
