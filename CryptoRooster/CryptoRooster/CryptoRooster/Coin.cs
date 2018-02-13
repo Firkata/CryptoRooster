@@ -8,7 +8,7 @@ namespace CryptoRooster
     public class Coin : INotifyPropertyChanged
     {
         private string _imageUrl = string.Empty;
-        private Image _imageFavourite = new Image { Source = "heart.png" };
+        private string _favouriteImage = "heart_empty.png";
         private bool _isFavourite = false;
 
         [JsonProperty("id")]
@@ -71,16 +71,16 @@ namespace CryptoRooster
                 _imageUrl = value;
             }
         }
-        
+
         public bool IsFavourite
         {
             get { return _isFavourite; }
             set
             {
-                if(_isFavourite != value)
+                if (_isFavourite != value)
                 {
                     _isFavourite = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(FavouriteImage));
                 }
             }
         }

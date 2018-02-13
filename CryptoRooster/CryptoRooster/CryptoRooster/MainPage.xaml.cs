@@ -11,7 +11,7 @@ namespace CryptoRooster
 {
     public partial class MainPage : ContentPage
     {
-        string url = "https://api.coinmarketcap.com/v1/ticker/?start=12&limit=5";//"https://api.coinmarketcap.com/v1/ticker/";
+        string url = "https://api.coinmarketcap.com/v1/ticker/?start=0&limit=50";
         HttpClient client = new HttpClient(new NativeMessageHandler());
         ObservableCollection<Coin> _coins;
         ObservableCollection<Coin> _favcoins;
@@ -46,35 +46,12 @@ namespace CryptoRooster
 
         private async void GetCoins()
         {
-            //try
-            //{
-            //    var jsonContent = await client.GetStringAsync(url);
-            //    coins = JsonConvert.DeserializeObject<List<Coin>>(jsonContent);
-            //}
-            //catch (Exception)
-            //{
-            //    await DisplayAlert("Connection Error", "Internet is turned off", "OK");
-            //    return;
-            //}
-
             var jsonContent = await client.GetStringAsync(url);
             var coins = JsonConvert.DeserializeObject<List<Coin>>(jsonContent);
 
             _coins = new ObservableCollection<Coin>(coins);
 
-            if (_favcoins != null || _favcoins.Count != 0)
-            {
-                foreach(Coin coin in _favcoins)
-                {
-                    if (_coins.Contains(coin))
-                    {
-                        _coins[_coins.IndexOf(coin)].IsFavourite = true;
-                    }
-                }
-            }
-
             coinslist.ItemsSource = _coins;
-            _favcoins = new ObservableCollection<Coin>(_coins.Where(c => c.IsFavourite).ToList());
         }
 
         async private void coinslist_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -86,7 +63,6 @@ namespace CryptoRooster
 
         private void coinslist_Refreshing(object sender, EventArgs e)
         {
-            //GetCoins();
             ValidateConnection();
             coinslist.EndRefresh();
         }
@@ -107,35 +83,21 @@ namespace CryptoRooster
         {
             try
             {
-                var button = sender as Button;
-                var coin = button.CommandParameter as Coin;
+                var coin = (sender as Button).CommandParameter as Coin;
                 if (coin.IsFavourite)
                 {
-                    button.Image = ImageSource.FromFile("heart_empty.png") as FileImageSource;
                     coin.IsFavourite = false;
-                    //coin.FavouriteImage = "heart_empty.png";
-                    _favcoins.Remove(coin);
                     _coins.Where(c => c.Equals(coin.Name)).FirstOrDefault(c => c.IsFavourite = false);
-                    //int index = coins.FindIndex(c => c.Name == coin.Name);
-                    //coins[index].IsFavourite = false;
-                    //coins[index].FavouriteImage = "heart_empty.png";
+                    _favcoins.Remove(coin);
                 }
                 else
                 {
-                    button.Image = ImageSource.FromFile("heart.png") as FileImageSource;
                     coin.IsFavourite = true;
-                    //coin.FavouriteImage = "heart.png";
-                    _favcoins.Add(coin);
                     _coins.Where(c => c.Equals(coin.Name)).FirstOrDefault(c => c.IsFavourite = true);
-                    //int index = coins.FindIndex(c => c.Name == coin.Name);
-                    //coins[index].IsFavourite = true;
-                    //coins[index].FavouriteImage = "heart.png";
+                    _favcoins.Add(coin);
                 }
             }
-            catch
-            {
-                
-            }
+            catch { }
         }
 
         private void Favourites_Clicked(object sender, EventArgs e)
@@ -163,6 +125,6 @@ namespace CryptoRooster
         //    var label = sender as Label;
         //    label.IsEnabled = false;
         //}
-        
+
     }
 }
