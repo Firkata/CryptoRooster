@@ -114,7 +114,6 @@ namespace CryptoRooster
                 return false;
             else
                 return Name.Equals(coin.Name);
-
         }
 
         public override int GetHashCode()

@@ -11,7 +11,7 @@ namespace CryptoRooster
 {
     public partial class MainPage : ContentPage
     {
-        string url = "https://api.coinmarketcap.com/v1/ticker/?start=0&limit=50";
+        string url = "https://api.coinmarketcap.com/v1/ticker/?start=0&limit=5";
         HttpClient client = new HttpClient(new NativeMessageHandler());
         ObservableCollection<Coin> _coins;
         ObservableCollection<Coin> _favcoins;
@@ -22,13 +22,14 @@ namespace CryptoRooster
         {
             _favcoins = new ObservableCollection<Coin>();
             InitializeComponent();
+            ValidateConnection();
             allcoins.FontSize = favourites.FontSize + 2;
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            ValidateConnection();
+
         }
 
         private void ValidateConnection()
@@ -56,22 +57,12 @@ namespace CryptoRooster
             {
                 foreach (Coin coin in _favcoins)
                 {
-                    foreach (Coin c in _favcoins)
-                    {
-                        if (coins.Contains(coin))
-                        {
-                            if (_coins.Contains(coin))
-                            {
-                                coins[coins.IndexOf(coin)].IsFavourite = true;
-                                _coins[_coins.IndexOf(coin)].IsFavourite = true;
-                            }
-                        }
-                    }
+                    _coins.FirstOrDefault(c => c.Equals(coin)).IsFavourite = true;
                 }
             }
 
             if (onFavouritePage)
-                coinslist.ItemsSource = _coins.Where(c => c.IsFavourite);
+                coinslist.ItemsSource = _coins.Where(c => c.IsFavourite).ToList();
             else
                 coinslist.ItemsSource = _coins;
         }
@@ -93,7 +84,7 @@ namespace CryptoRooster
         {
             if (!string.IsNullOrWhiteSpace(e.NewTextValue))
             {
-                coinslist.ItemsSource = _coins.Where(c => c.Name.ToLower().Contains(e.NewTextValue.ToLowerInvariant()));
+                coinslist.ItemsSource = _coins.Where(c => c.Name.ToLower().Contains(e.NewTextValue.ToLowerInvariant())).ToList();
             }
             else
             {
@@ -109,21 +100,29 @@ namespace CryptoRooster
                 if (coin.IsFavourite)
                 {
                     coin.IsFavourite = false;
-                    _coins.Where(c => c.Equals(coin.Name)).FirstOrDefault(c => c.IsFavourite = false);
+                    _coins.FirstOrDefault(c => c.Equals(coin)).IsFavourite = false;
                     _favcoins.Remove(coin);
+
                 }
                 else
                 {
                     coin.IsFavourite = true;
-                    _coins.Where(c => c.Equals(coin.Name)).FirstOrDefault(c => c.IsFavourite = true);
+                    _coins.FirstOrDefault(c => c.Equals(coin)).IsFavourite = true;
                     _favcoins.Add(coin);
+
                 }
+
+                //if (onFavouritePage)
+                //    coinslist.ItemsSource = _coins.Where(c => c.IsFavourite).ToList();
+                //else
+                //    coinslist.ItemsSource = _coins;
             }
             catch { }
         }
 
         private void Favourites_Clicked(object sender, EventArgs e)
         {
+            coinslist.ItemsSource = null;
             onFavouritePage = true;
 
             favourites.TextColor = Color.White;
@@ -131,11 +130,12 @@ namespace CryptoRooster
             favourites.FontSize = favourites.FontSize + 2;
             allcoins.FontSize = allcoins.FontSize - 2;
 
-            coinslist.ItemsSource = _favcoins;
+            coinslist.ItemsSource = _coins.Where(c =>c.IsFavourite).ToList();
         }
 
         private void Allcoins_Clicked(object sender, EventArgs e)
         {
+            coinslist.ItemsSource = null;
             onFavouritePage = false;
 
             favourites.TextColor = Color.Gray;
@@ -145,12 +145,5 @@ namespace CryptoRooster
 
             coinslist.ItemsSource = _coins;
         }
-
-        //private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
-        //{
-        //    var label = sender as Label;
-        //    label.IsEnabled = false;
-        //}
-
     }
 }
