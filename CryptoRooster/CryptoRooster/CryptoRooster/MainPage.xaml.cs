@@ -13,16 +13,18 @@ namespace CryptoRooster
     {
         string url = "https://api.coinmarketcap.com/v1/ticker/?start=0&limit=5";
         HttpClient client = new HttpClient(new NativeMessageHandler());
-        ObservableCollection<Coin> _coins;
+        ObservableCollection<Coin> _allcoins = new ObservableCollection<Coin>();
+        ObservableCollection<Coin> _coins = new ObservableCollection<Coin>();
         ObservableCollection<Coin> _favcoins;
         bool onFavouritePage = false;
 
+        public ObservableCollection<Coin> Coins { get => _coins; set => _coins = value; }
 
         public MainPage()
         {
             _favcoins = new ObservableCollection<Coin>();
             InitializeComponent();
-            ValidateConnection();
+            
             allcoins.FontSize = favourites.FontSize + 2;
         }
 
@@ -30,6 +32,8 @@ namespace CryptoRooster
         {
             base.OnAppearing();
 
+            coinslist.ItemsSource = _coins;
+            ValidateConnection();
         }
 
         private void ValidateConnection()
@@ -51,7 +55,12 @@ namespace CryptoRooster
             var jsonContent = await client.GetStringAsync(url);
             var coins = JsonConvert.DeserializeObject<List<Coin>>(jsonContent);
 
-            _coins = new ObservableCollection<Coin>(coins);
+            _coins.Clear();
+            foreach(var c in coins)
+            {
+                _coins.Add(c);
+            }
+            //_coins = new ObservableCollection<Coin>(coins);
 
             if (_favcoins != null || _favcoins.Count != 0)
             {
@@ -61,10 +70,10 @@ namespace CryptoRooster
                 }
             }
 
-            if (onFavouritePage)
-                coinslist.ItemsSource = _coins.Where(c => c.IsFavourite).ToList();
-            else
-                coinslist.ItemsSource = _coins;
+            //if (onFavouritePage)
+            //    coinslist.ItemsSource = _coins.Where(c => c.IsFavourite).ToList();
+            //else
+            //coinslist.ItemsSource = _coins;
         }
 
         async private void coinslist_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -101,6 +110,11 @@ namespace CryptoRooster
                 {
                     coin.IsFavourite = false;
                     _coins.FirstOrDefault(c => c.Equals(coin)).IsFavourite = false;
+                    if(onFavouritePage)
+                    {
+                        _coins.Remove(coin);
+                    }
+
                     _favcoins.Remove(coin);
 
                 }
@@ -109,7 +123,6 @@ namespace CryptoRooster
                     coin.IsFavourite = true;
                     _coins.FirstOrDefault(c => c.Equals(coin)).IsFavourite = true;
                     _favcoins.Add(coin);
-
                 }
 
                 //if (onFavouritePage)
@@ -122,7 +135,7 @@ namespace CryptoRooster
 
         private void Favourites_Clicked(object sender, EventArgs e)
         {
-            coinslist.ItemsSource = null;
+            //coinslist.ItemsSource = null;
             onFavouritePage = true;
 
             favourites.TextColor = Color.White;
@@ -130,12 +143,24 @@ namespace CryptoRooster
             favourites.FontSize = favourites.FontSize + 2;
             allcoins.FontSize = allcoins.FontSize - 2;
 
-            coinslist.ItemsSource = _coins.Where(c =>c.IsFavourite).ToList();
+            _allcoins.Clear();
+            foreach(Coin c in _coins)
+            {
+                _allcoins.Add(c);
+            }
+
+            _coins.Clear();
+            foreach (Coin c in _favcoins)
+            {
+                _coins.Add(c);
+            }
+            //_coins = _favcoins;
+            //coinslist.ItemsSource = _coins.Where(c =>c.IsFavourite).ToList();
         }
 
         private void Allcoins_Clicked(object sender, EventArgs e)
         {
-            coinslist.ItemsSource = null;
+            //coinslist.ItemsSource = null;
             onFavouritePage = false;
 
             favourites.TextColor = Color.Gray;
@@ -143,7 +168,14 @@ namespace CryptoRooster
             favourites.FontSize = favourites.FontSize - 2;
             allcoins.FontSize = allcoins.FontSize + 2;
 
-            coinslist.ItemsSource = _coins;
+            List<Coin> intersection = _allcoins.Except(_coins).ToList();
+            //_coins.Clear();
+            foreach (Coin c in intersection)
+            {
+                c.IsFavourite = false;
+                _coins.Add(c);
+            }
+            //coinslist.ItemsSource = _coins;
         }
     }
 }
