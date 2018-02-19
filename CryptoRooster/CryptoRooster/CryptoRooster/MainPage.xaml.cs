@@ -22,14 +22,14 @@ namespace CryptoRooster
         {
             _favcoins = new ObservableCollection<Coin>();
             InitializeComponent();
-            ValidateConnection();
+            
             allcoins.FontSize = favourites.FontSize + 2;
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
+            ValidateConnection();
         }
 
         private void ValidateConnection()
