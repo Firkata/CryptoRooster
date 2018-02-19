@@ -31,8 +31,6 @@ namespace CryptoRooster
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            coinslist.ItemsSource = _coins;
             ValidateConnection();
         }
 
