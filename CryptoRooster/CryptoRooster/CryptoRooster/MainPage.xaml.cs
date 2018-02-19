@@ -11,27 +11,31 @@ namespace CryptoRooster
 {
     public partial class MainPage : ContentPage
     {
-        string url = "https://api.coinmarketcap.com/v1/ticker/?start=0&limit=5";
+        string url = "https://api.coinmarketcap.com/v1/ticker/?start=0&limit=500";
         HttpClient client = new HttpClient(new NativeMessageHandler());
-        ObservableCollection<Coin> _allcoins = new ObservableCollection<Coin>();
         ObservableCollection<Coin> _coins = new ObservableCollection<Coin>();
-        ObservableCollection<Coin> _favcoins;
+        ObservableCollection<Coin> _favcoins = new ObservableCollection<Coin>();
         bool onFavouritePage = false;
 
-        public ObservableCollection<Coin> Coins { get => _coins; set => _coins = value; }
 
         public MainPage()
         {
-            _favcoins = new ObservableCollection<Coin>();
             InitializeComponent();
-            
+            ValidateConnection();
             allcoins.FontSize = favourites.FontSize + 2;
+
+
+            _coins.CollectionChanged += _coins_CollectionChanged;
+        }
+
+        private void _coins_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            coinslist.ItemsSource = sender as ObservableCollection<Coin>;
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            ValidateConnection();
         }
 
         private void ValidateConnection()
@@ -53,25 +57,22 @@ namespace CryptoRooster
             var jsonContent = await client.GetStringAsync(url);
             var coins = JsonConvert.DeserializeObject<List<Coin>>(jsonContent);
 
-            _coins.Clear();
-            foreach(var c in coins)
-            {
-                _coins.Add(c);
-            }
-            //_coins = new ObservableCollection<Coin>(coins);
+            _coins = new ObservableCollection<Coin>(coins);
 
             if (_favcoins != null || _favcoins.Count != 0)
             {
                 foreach (Coin coin in _favcoins)
                 {
-                    _coins.FirstOrDefault(c => c.Equals(coin)).IsFavourite = true;
+                    int index = _coins.IndexOf(coin);
+                    _coins.Remove(coin);
+                    _coins.Insert(index, coin);
                 }
             }
 
-            //if (onFavouritePage)
-            //    coinslist.ItemsSource = _coins.Where(c => c.IsFavourite).ToList();
-            //else
-            //coinslist.ItemsSource = _coins;
+            if (onFavouritePage)
+                coinslist.ItemsSource = _coins.Where(c => c.IsFavourite).ToList();
+            else
+                coinslist.ItemsSource = _coins;
         }
 
         async private void coinslist_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -108,11 +109,6 @@ namespace CryptoRooster
                 {
                     coin.IsFavourite = false;
                     _coins.FirstOrDefault(c => c.Equals(coin)).IsFavourite = false;
-                    if(onFavouritePage)
-                    {
-                        _coins.Remove(coin);
-                    }
-
                     _favcoins.Remove(coin);
 
                 }
@@ -121,19 +117,20 @@ namespace CryptoRooster
                     coin.IsFavourite = true;
                     _coins.FirstOrDefault(c => c.Equals(coin)).IsFavourite = true;
                     _favcoins.Add(coin);
+
                 }
 
-                //if (onFavouritePage)
-                //    coinslist.ItemsSource = _coins.Where(c => c.IsFavourite).ToList();
-                //else
-                //    coinslist.ItemsSource = _coins;
+                if (onFavouritePage)
+                    coinslist.ItemsSource = _coins.Where(c => c.IsFavourite).ToList();
+                else
+                    coinslist.ItemsSource = _coins;
             }
             catch { }
         }
 
         private void Favourites_Clicked(object sender, EventArgs e)
         {
-            //coinslist.ItemsSource = null;
+            coinslist.ItemsSource = null;
             onFavouritePage = true;
 
             favourites.TextColor = Color.White;
@@ -141,24 +138,12 @@ namespace CryptoRooster
             favourites.FontSize = favourites.FontSize + 2;
             allcoins.FontSize = allcoins.FontSize - 2;
 
-            _allcoins.Clear();
-            foreach(Coin c in _coins)
-            {
-                _allcoins.Add(c);
-            }
-
-            _coins.Clear();
-            foreach (Coin c in _favcoins)
-            {
-                _coins.Add(c);
-            }
-            //_coins = _favcoins;
-            //coinslist.ItemsSource = _coins.Where(c =>c.IsFavourite).ToList();
+            coinslist.ItemsSource = _coins.Where(c => c.IsFavourite).ToList();
         }
 
         private void Allcoins_Clicked(object sender, EventArgs e)
         {
-            //coinslist.ItemsSource = null;
+            coinslist.ItemsSource = null;
             onFavouritePage = false;
 
             favourites.TextColor = Color.Gray;
@@ -166,14 +151,7 @@ namespace CryptoRooster
             favourites.FontSize = favourites.FontSize - 2;
             allcoins.FontSize = allcoins.FontSize + 2;
 
-            List<Coin> intersection = _allcoins.Except(_coins).ToList();
-            //_coins.Clear();
-            foreach (Coin c in intersection)
-            {
-                c.IsFavourite = false;
-                _coins.Add(c);
-            }
-            //coinslist.ItemsSource = _coins;
+            coinslist.ItemsSource = _coins;
         }
     }
 }
